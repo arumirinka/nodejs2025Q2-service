@@ -45,6 +45,9 @@ export class ArtistService {
     this.database.artists.splice(artistIndex, 1);
     this.database.tracks.forEach(track => {
       if (track.artistId === id) track.artistId = null;
-    })
+    });
+    this.database.albums.forEach(album => {
+      if (album.artistId === id) album.artistId = null;
+    });
   }
 }
