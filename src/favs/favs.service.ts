@@ -13,9 +13,15 @@ export class FavsService {
 
   findAll() {
     const favs = this.database.favs;
-    const albums = favs.albums.map(id => this.database.albums.find(el => el.id === id));
-    const artists = favs.artists.map(id => this.database.artists.find(el => el.id === id));
-    const tracks = favs.tracks.map(id => this.database.tracks.find(el => el.id === id));
+    const albums = favs.albums.map((id) =>
+      this.database.albums.find((el) => el.id === id),
+    );
+    const artists = favs.artists.map((id) =>
+      this.database.artists.find((el) => el.id === id),
+    );
+    const tracks = favs.tracks.map((id) =>
+      this.database.tracks.find((el) => el.id === id),
+    );
 
     return { albums, artists, tracks };
   }
