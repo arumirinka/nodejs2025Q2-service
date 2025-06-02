@@ -1,4 +1,8 @@
-import { BadRequestException, ForbiddenException, Injectable, NotFoundException } from '@nestjs/common';
+import {
+  BadRequestException,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
 import { CreateTrackDto } from './dto/create-track.dto';
 import { UpdateTrackDto } from './dto/update-track.dto';
 import { DatabaseService } from 'src/database/database.service';
@@ -23,27 +27,32 @@ export class TrackService {
   }
 
   findOne(id: string) {
-    const track = this.database.tracks.find(track => track.id === id);
-    if (!track) throw new NotFoundException("Track not found");
+    const track = this.database.tracks.find((track) => track.id === id);
+    if (!track) throw new NotFoundException('Track not found');
     return track;
   }
 
   update(id: string, updateTrackDto: UpdateTrackDto) {
-    if (!id || !updateTrackDto.name || !updateTrackDto.duration) throw new BadRequestException("Invalid input");
-    const track = this.database.tracks.find(track => track.id === id);
-    if (!track) throw new NotFoundException("Track not found");
+    if (!id || !updateTrackDto.name || !updateTrackDto.duration)
+      throw new BadRequestException('Invalid input');
+    const track = this.database.tracks.find((track) => track.id === id);
+    if (!track) throw new NotFoundException('Track not found');
 
     track.name = updateTrackDto.name;
     track.duration = track.duration;
-    if (updateTrackDto.hasOwnProperty("albumId")) track.albumId = updateTrackDto.albumId;
-    if (updateTrackDto.hasOwnProperty("artistId")) track.artistId = updateTrackDto.artistId;
+    if (updateTrackDto.hasOwnProperty('albumId'))
+      track.albumId = updateTrackDto.albumId;
+    if (updateTrackDto.hasOwnProperty('artistId'))
+      track.artistId = updateTrackDto.artistId;
 
     return track;
   }
 
   remove(id: string) {
-    const trackIndex = this.database.tracks.findIndex(track => track.id === id);
-    if (trackIndex < 0) throw new NotFoundException("Track not found");
+    const trackIndex = this.database.tracks.findIndex(
+      (track) => track.id === id,
+    );
+    if (trackIndex < 0) throw new NotFoundException('Track not found');
     this.database.tracks.splice(trackIndex, 1);
   }
 }

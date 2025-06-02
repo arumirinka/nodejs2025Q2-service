@@ -1,4 +1,16 @@
-import { Controller, Get, Post, Body, Param, Delete, BadRequestException, UsePipes, ValidationPipe, Put, HttpCode } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Param,
+  Delete,
+  BadRequestException,
+  UsePipes,
+  ValidationPipe,
+  Put,
+  HttpCode,
+} from '@nestjs/common';
 import { validate } from 'uuid';
 import { UserService } from './user.service';
 import { CreateUserDto } from './dto/create-user.dto';
@@ -22,7 +34,7 @@ export class UserController {
   @Get(':id')
   findOne(@Param('id') id: string) {
     if (!validate(id)) {
-      throw new BadRequestException("Invalid user id");
+      throw new BadRequestException('Invalid user id');
     }
     return this.userService.findOne(id);
   }
@@ -30,7 +42,7 @@ export class UserController {
   @Put(':id')
   update(@Param('id') id: string, @Body() updateUserDto: UpdateUserDto) {
     if (!validate(id)) {
-      throw new BadRequestException("Invalid user id");
+      throw new BadRequestException('Invalid user id');
     }
     return this.userService.update(id, updateUserDto);
   }
@@ -39,7 +51,7 @@ export class UserController {
   @HttpCode(204)
   remove(@Param('id') id: string) {
     if (!validate(id)) {
-      throw new BadRequestException("Invalid user id");
+      throw new BadRequestException('Invalid user id');
     }
     return this.userService.remove(id);
   }

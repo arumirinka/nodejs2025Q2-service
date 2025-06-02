@@ -1,4 +1,16 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, UsePipes, ValidationPipe, BadRequestException, Put, HttpCode } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Param,
+  Delete,
+  UsePipes,
+  ValidationPipe,
+  BadRequestException,
+  Put,
+  HttpCode,
+} from '@nestjs/common';
 import { ArtistService } from './artist.service';
 import { CreateArtistDto } from './dto/create-artist.dto';
 import { UpdateArtistDto } from './dto/update-artist.dto';
@@ -22,7 +34,7 @@ export class ArtistController {
   @Get(':id')
   findOne(@Param('id') id: string) {
     if (!validate(id)) {
-      throw new BadRequestException("Invalid artist id");
+      throw new BadRequestException('Invalid artist id');
     }
     return this.artistService.findOne(id);
   }
@@ -31,7 +43,7 @@ export class ArtistController {
   @Put(':id')
   update(@Param('id') id: string, @Body() updateArtistDto: UpdateArtistDto) {
     if (!validate(id)) {
-      throw new BadRequestException("Invalid artist id");
+      throw new BadRequestException('Invalid artist id');
     }
     return this.artistService.update(id, updateArtistDto);
   }
@@ -40,7 +52,7 @@ export class ArtistController {
   @HttpCode(204)
   remove(@Param('id') id: string) {
     if (!validate(id)) {
-      throw new BadRequestException("Invalid artist id");
+      throw new BadRequestException('Invalid artist id');
     }
     return this.artistService.remove(id);
   }

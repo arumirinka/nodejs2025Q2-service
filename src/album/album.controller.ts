@@ -1,4 +1,16 @@
-import { Controller, Get, Post, Body, Param, Delete, UsePipes, ValidationPipe, BadRequestException, HttpCode, Put } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Param,
+  Delete,
+  UsePipes,
+  ValidationPipe,
+  BadRequestException,
+  HttpCode,
+  Put,
+} from '@nestjs/common';
 import { AlbumService } from './album.service';
 import { CreateAlbumDto } from './dto/create-album.dto';
 import { UpdateAlbumDto } from './dto/update-album.dto';
@@ -22,7 +34,7 @@ export class AlbumController {
   @Get(':id')
   findOne(@Param('id') id: string) {
     if (!validate(id)) {
-      throw new BadRequestException("Invalid album id");
+      throw new BadRequestException('Invalid album id');
     }
     return this.albumService.findOne(id);
   }
@@ -31,7 +43,7 @@ export class AlbumController {
   @Put(':id')
   update(@Param('id') id: string, @Body() updateAlbumDto: UpdateAlbumDto) {
     if (!validate(id)) {
-      throw new BadRequestException("Invalid album id");
+      throw new BadRequestException('Invalid album id');
     }
     return this.albumService.update(id, updateAlbumDto);
   }
@@ -40,7 +52,7 @@ export class AlbumController {
   @HttpCode(204)
   remove(@Param('id') id: string) {
     if (!validate(id)) {
-      throw new BadRequestException("Invalid album id");
+      throw new BadRequestException('Invalid album id');
     }
     return this.albumService.remove(id);
   }

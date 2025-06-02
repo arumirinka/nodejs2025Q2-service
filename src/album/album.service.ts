@@ -1,4 +1,8 @@
-import { BadRequestException, Injectable, NotFoundException } from '@nestjs/common';
+import {
+  BadRequestException,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
 import { CreateAlbumDto } from './dto/create-album.dto';
 import { UpdateAlbumDto } from './dto/update-album.dto';
 import { DatabaseService } from 'src/database/database.service';
@@ -22,28 +26,32 @@ export class AlbumService {
   }
 
   findOne(id: string) {
-    const album = this.database.albums.find(album => album.id === id);
-    if (!album) throw new NotFoundException("Album not found");
+    const album = this.database.albums.find((album) => album.id === id);
+    if (!album) throw new NotFoundException('Album not found');
     return album;
   }
 
   update(id: string, updateAlbumDto: UpdateAlbumDto) {
-    if (!id || !updateAlbumDto.name || !updateAlbumDto.year) throw new BadRequestException("Invalid input");
-    const album = this.database.albums.find(album => album.id === id);
-    if (!album) throw new NotFoundException("Album not found");
+    if (!id || !updateAlbumDto.name || !updateAlbumDto.year)
+      throw new BadRequestException('Invalid input');
+    const album = this.database.albums.find((album) => album.id === id);
+    if (!album) throw new NotFoundException('Album not found');
 
     album.name = updateAlbumDto.name;
     album.year = updateAlbumDto.year;
-    if (updateAlbumDto.hasOwnProperty("artistId")) album.artistId = updateAlbumDto.artistId;
+    if (updateAlbumDto.hasOwnProperty('artistId'))
+      album.artistId = updateAlbumDto.artistId;
 
     return album;
   }
 
   remove(id: string) {
-    const albumIndex = this.database.albums.findIndex(album => album.id === id);
-    if (albumIndex < 0) throw new NotFoundException("Album not found");
+    const albumIndex = this.database.albums.findIndex(
+      (album) => album.id === id,
+    );
+    if (albumIndex < 0) throw new NotFoundException('Album not found');
     this.database.albums.splice(albumIndex, 1);
-    this.database.tracks.forEach(track => {
+    this.database.tracks.forEach((track) => {
       if (track.albumId === id) track.albumId = null;
     });
   }

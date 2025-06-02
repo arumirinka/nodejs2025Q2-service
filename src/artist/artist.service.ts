@@ -1,4 +1,8 @@
-import { BadRequestException, Injectable, NotFoundException } from '@nestjs/common';
+import {
+  BadRequestException,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
 import { CreateArtistDto } from './dto/create-artist.dto';
 import { UpdateArtistDto } from './dto/update-artist.dto';
 import { DatabaseService } from 'src/database/database.service';
@@ -23,15 +27,20 @@ export class ArtistService {
   }
 
   findOne(id: string) {
-    const artist = this.database.artists.find(artist => artist.id === id);
-    if (!artist) throw new NotFoundException("Artist not found");
+    const artist = this.database.artists.find((artist) => artist.id === id);
+    if (!artist) throw new NotFoundException('Artist not found');
     return artist;
   }
 
   update(id: string, updateArtistDto: UpdateArtistDto) {
-    if (!id || !updateArtistDto.name || !updateArtistDto.hasOwnProperty("grammy")) throw new BadRequestException("Invalid input");
-    const artist = this.database.artists.find(artist => artist.id === id);
-    if (!artist) throw new NotFoundException("Artist not found");
+    if (
+      !id ||
+      !updateArtistDto.name ||
+      !updateArtistDto.hasOwnProperty('grammy')
+    )
+      throw new BadRequestException('Invalid input');
+    const artist = this.database.artists.find((artist) => artist.id === id);
+    if (!artist) throw new NotFoundException('Artist not found');
 
     artist.name = updateArtistDto.name;
     artist.grammy = updateArtistDto.grammy;
@@ -40,13 +49,15 @@ export class ArtistService {
   }
 
   remove(id: string) {
-    const artistIndex = this.database.artists.findIndex(artist => artist.id === id);
-    if (artistIndex < 0) throw new NotFoundException("Artist not found");
+    const artistIndex = this.database.artists.findIndex(
+      (artist) => artist.id === id,
+    );
+    if (artistIndex < 0) throw new NotFoundException('Artist not found');
     this.database.artists.splice(artistIndex, 1);
-    this.database.tracks.forEach(track => {
+    this.database.tracks.forEach((track) => {
       if (track.artistId === id) track.artistId = null;
     });
-    this.database.albums.forEach(album => {
+    this.database.albums.forEach((album) => {
       if (album.artistId === id) album.artistId = null;
     });
   }

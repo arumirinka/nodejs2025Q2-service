@@ -1,4 +1,16 @@
-import { Controller, Get, Post, Body, Param, Delete, BadRequestException, HttpCode, UsePipes, ValidationPipe, Put } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Param,
+  Delete,
+  BadRequestException,
+  HttpCode,
+  UsePipes,
+  ValidationPipe,
+  Put,
+} from '@nestjs/common';
 import { TrackService } from './track.service';
 import { CreateTrackDto } from './dto/create-track.dto';
 import { UpdateTrackDto } from './dto/update-track.dto';
@@ -22,7 +34,7 @@ export class TrackController {
   @Get(':id')
   findOne(@Param('id') id: string) {
     if (!validate(id)) {
-      throw new BadRequestException("Invalid track id");
+      throw new BadRequestException('Invalid track id');
     }
     return this.trackService.findOne(id);
   }
@@ -30,7 +42,7 @@ export class TrackController {
   @Put(':id')
   update(@Param('id') id: string, @Body() updateTrackDto: UpdateTrackDto) {
     if (!validate(id)) {
-      throw new BadRequestException("Invalid track id");
+      throw new BadRequestException('Invalid track id');
     }
     return this.trackService.update(id, updateTrackDto);
   }
@@ -39,7 +51,7 @@ export class TrackController {
   @HttpCode(204)
   remove(@Param('id') id: string) {
     if (!validate(id)) {
-      throw new BadRequestException("Invalid track id");
+      throw new BadRequestException('Invalid track id');
     }
     return this.trackService.remove(id);
   }

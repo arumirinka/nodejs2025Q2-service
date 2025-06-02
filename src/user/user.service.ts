@@ -1,4 +1,9 @@
-import { BadRequestException, ForbiddenException, Injectable, NotFoundException } from '@nestjs/common';
+import {
+  BadRequestException,
+  ForbiddenException,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { DatabaseService } from 'src/database/database.service';
@@ -29,16 +34,18 @@ export class UserService {
   }
 
   findOne(id: string) {
-    const user = this.database.users.find(user => user.id === id);
-    if (!user) throw new NotFoundException("User not found");
+    const user = this.database.users.find((user) => user.id === id);
+    if (!user) throw new NotFoundException('User not found');
     return user;
   }
 
   update(id: string, updateUserDto: UpdateUserDto) {
-    if (!id || !updateUserDto.oldPassword || !updateUserDto.newPassword) throw new BadRequestException("Invalid input");
-    const user = this.database.users.find(user => user.id === id);
-    if (!user) throw new NotFoundException("User not found");
-    if (user.password !== updateUserDto.oldPassword) throw new ForbiddenException("Forbidden");
+    if (!id || !updateUserDto.oldPassword || !updateUserDto.newPassword)
+      throw new BadRequestException('Invalid input');
+    const user = this.database.users.find((user) => user.id === id);
+    if (!user) throw new NotFoundException('User not found');
+    if (user.password !== updateUserDto.oldPassword)
+      throw new ForbiddenException('Forbidden');
 
     user.password = updateUserDto.password;
     user.version = user.version + 1;
@@ -49,8 +56,8 @@ export class UserService {
   }
 
   remove(id: string) {
-    const userIndex = this.database.users.findIndex(user => user.id === id);
-    if (userIndex < 0) throw new NotFoundException("User not found");
+    const userIndex = this.database.users.findIndex((user) => user.id === id);
+    if (userIndex < 0) throw new NotFoundException('User not found');
     this.database.users.splice(userIndex, 1);
   }
 }
