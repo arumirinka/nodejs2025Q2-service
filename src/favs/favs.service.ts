@@ -1,14 +1,38 @@
 import { Injectable } from '@nestjs/common';
-import { CreateFavDto } from './dto/create-fav.dto';
-import { UpdateFavDto } from './dto/update-fav.dto';
 import { DatabaseService } from 'src/database/database.service';
 
 @Injectable()
 export class FavsService {
   constructor(private database: DatabaseService) {}
 
-  create(createFavDto: CreateFavDto) {
-    return 'This action adds a new fav';
+  addAlbum(id: string) {
+    const album = this.database.albums.find(album => album.id === id);
+    if (!album) return false;
+    const isInFavs = this.database.favs.albums.includes(id);
+    if (!isInFavs) {
+      this.database.favs.albums.push(id);
+    }
+    return 'Done';
+  }
+
+  addArtist(id: string) {
+    const artist = this.database.artists.find(artist => artist.id === id);
+    if (!artist) return false;
+    const isInFavs = this.database.favs.artists.includes(id);
+    if (!isInFavs) {
+      this.database.favs.artists.push(id);
+    }
+    return 'Done';
+  }
+
+  addTrack(id: string) {
+    const track = this.database.tracks.find(track => track.id === id);
+    if (!track) return false;
+    const isInFavs = this.database.favs.tracks.includes(id);
+    if (!isInFavs) {
+      this.database.favs.tracks.push(id);
+    }
+    return 'Done';
   }
 
   findAll() {
@@ -26,15 +50,24 @@ export class FavsService {
     return { albums, artists, tracks };
   }
 
-  findOne(id: string) {
-    return `This action returns a #${id} fav`;
+  removeAlbum(id: string) {
+    const albumId = this.database.favs.albums.findIndex(albumId => albumId === id);
+    if (albumId < 0) return false;
+    this.database.favs.albums.splice(albumId, 1);
+    return 'Done';
   }
 
-  update(id: string, updateFavDto: UpdateFavDto) {
-    return `This action updates a #${id} fav`;
+  removeArtist(id: string) {
+    const artistId = this.database.favs.artists.findIndex(artistId => artistId === id);
+    if (artistId < 0) return false;
+    this.database.favs.artists.splice(artistId, 1);
+    return 'Done';
   }
 
-  remove(id: string) {
-    return `This action removes a #${id} fav`;
+  removeTrack(id: string) {
+    const trackId = this.database.favs.tracks.findIndex(trackId => trackId === id);
+    if (trackId < 0) return false;
+    this.database.favs.tracks.splice(trackId, 1);
+    return 'Done';
   }
 }

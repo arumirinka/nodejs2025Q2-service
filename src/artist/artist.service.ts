@@ -60,5 +60,9 @@ export class ArtistService {
     this.database.albums.forEach((album) => {
       if (album.artistId === id) album.artistId = null;
     });
+    const idInFavs = this.database.favs.artists.findIndex(artistId => artistId === id);
+    if (idInFavs > -1) {
+      this.database.favs.artists.splice(idInFavs, 1);
+    }
   }
 }
