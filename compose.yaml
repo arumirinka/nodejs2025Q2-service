@@ -5,6 +5,13 @@ services:
     ports:
       - ${PORT}:${PORT}
     restart: always
+    develop:
+      watch:
+        - path: ./src
+          target: /app/src
+          action: rebuild
+        - action: rebuild
+          path: package.json
     volumes:
       - ./src:/app/src
       - /app/node_modules

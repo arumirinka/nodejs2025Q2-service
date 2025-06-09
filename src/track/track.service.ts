@@ -54,7 +54,9 @@ export class TrackService {
     );
     if (trackIndex < 0) throw new NotFoundException('Track not found');
     this.database.tracks.splice(trackIndex, 1);
-    const idInFavs = this.database.favs.tracks.findIndex(trackId => trackId === id);
+    const idInFavs = this.database.favs.tracks.findIndex(
+      (trackId) => trackId === id,
+    );
     if (idInFavs > -1) {
       this.database.favs.tracks.splice(idInFavs, 1);
     }

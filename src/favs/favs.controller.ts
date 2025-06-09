@@ -23,7 +23,9 @@ export class FavsController {
     }
     const res = this.favsService.addAlbum(id);
     if (!res) {
-      throw new UnprocessableEntityException('Album with this id does not exist.')
+      throw new UnprocessableEntityException(
+        'Album with this id does not exist.',
+      );
     }
 
     return 'Album added to favorites.';
@@ -36,7 +38,9 @@ export class FavsController {
     }
     const res = this.favsService.addArtist(id);
     if (!res) {
-      throw new UnprocessableEntityException('Artist with this id does not exist.')
+      throw new UnprocessableEntityException(
+        'Artist with this id does not exist.',
+      );
     }
 
     return 'Artist added to favorites.';
@@ -49,7 +53,9 @@ export class FavsController {
     }
     const res = this.favsService.addTrack(id);
     if (!res) {
-      throw new UnprocessableEntityException('Track with this id does not exist.')
+      throw new UnprocessableEntityException(
+        'Track with this id does not exist.',
+      );
     }
 
     return 'Track added to favorites.';
@@ -68,7 +74,7 @@ export class FavsController {
     }
     const res = this.favsService.removeAlbum(id);
     if (!res) {
-      throw new NotFoundException('Album with this id is not in favorites.')
+      throw new NotFoundException('Album with this id is not in favorites.');
     }
 
     return 'Album removed from favorites.';
@@ -82,7 +88,7 @@ export class FavsController {
     }
     const res = this.favsService.removeArtist(id);
     if (!res) {
-      throw new NotFoundException('Artist with this id is not in favorites.')
+      throw new NotFoundException('Artist with this id is not in favorites.');
     }
 
     return 'Artist removed from favorites.';
@@ -96,7 +102,7 @@ export class FavsController {
     }
     const res = this.favsService.removeTrack(id);
     if (!res) {
-      throw new NotFoundException('Track with this id is not in favorites.')
+      throw new NotFoundException('Track with this id is not in favorites.');
     }
 
     return 'Track removed from favorites.';

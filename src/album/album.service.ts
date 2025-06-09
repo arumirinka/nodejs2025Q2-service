@@ -54,7 +54,9 @@ export class AlbumService {
     this.database.tracks.forEach((track) => {
       if (track.albumId === id) track.albumId = null;
     });
-    const idInFavs = this.database.favs.albums.findIndex(albumId => albumId === id);
+    const idInFavs = this.database.favs.albums.findIndex(
+      (albumId) => albumId === id,
+    );
     if (idInFavs > -1) {
       this.database.favs.albums.splice(idInFavs, 1);
     }
