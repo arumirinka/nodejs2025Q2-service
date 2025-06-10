@@ -1,0 +1,23 @@
+services:
+  api: 
+    build: .
+    container_name: api
+    ports:
+      - ${PORT}:${PORT}
+    restart: always
+    develop:
+      watch:
+        - path: ./src
+          target: /app/src
+          action: rebuild
+        - action: rebuild
+          path: package.json
+    volumes:
+      - ./src:/app/src
+      - /app/node_modules
+    networks:
+      - is-ls
+
+networks:
+  is-ls:
+    driver: bridge
