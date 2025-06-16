@@ -5,3 +5,4 @@ doc
 package-lock.json
 .env.example
 .git
+logs
