@@ -4,7 +4,7 @@ import {
   LoggerService,
   LogLevel,
 } from '@nestjs/common';
-import { appendFileSync, existsSync, mkdirSync } from 'fs';
+import { appendFileSync, existsSync, mkdirSync, renameSync, statSync } from 'fs';
 import { dirname, join } from 'path';
 
 @Injectable()
@@ -49,6 +49,13 @@ export class LoggingService implements LoggerService {
     const logDir = dirname(this.logFile);
     if (!existsSync(logDir)) {
       mkdirSync(logDir, { recursive: true });
+    } else {
+      const fileSize = statSync(this.logFile)?.size;
+  
+      if (fileSize >= +(process.env.MAX_LOGS_FILE_SIZE) || 10240) {
+        const newLogFile = join(dirname(this.logFile), `common${Date.parse(timestamp)}.log`);
+        renameSync(this.logFile, newLogFile);
+      }
     }
 
     appendFileSync(this.logFile, content);
@@ -66,6 +73,13 @@ export class LoggingService implements LoggerService {
     const errorLogDir = dirname(this.errorLogFile);
     if (!existsSync(errorLogDir)) {
       mkdirSync(errorLogDir, { recursive: true });
+    } else {
+      const fileSize = statSync(this.errorLogFile)?.size;
+  
+      if (fileSize >= +(process.env.MAX_LOGS_FILE_SIZE) || 10240) {
+        const newErrorLogFile = join(dirname(this.errorLogFile), `error${Date.parse(timestamp)}.log`);
+        renameSync(this.errorLogFile, newErrorLogFile);
+      }
     }
 
     appendFileSync(this.errorLogFile, content);
