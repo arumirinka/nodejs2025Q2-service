@@ -8,6 +8,7 @@ import { TrackModule } from './track/track.module';
 import { FavsModule } from './favs/favs.module';
 import { DatabaseModule } from './database/database.module';
 import { LoggingService } from './logger/logging.service';
+import { AuthModule } from './auth/auth.module';
 
 @Module({
   imports: [
@@ -17,6 +18,7 @@ import { LoggingService } from './logger/logging.service';
     TrackModule,
     FavsModule,
     DatabaseModule,
+    AuthModule,
   ],
   controllers: [AppController],
   providers: [AppService, LoggingService],
