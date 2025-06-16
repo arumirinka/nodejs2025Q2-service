@@ -1,6 +1,11 @@
-import { ConsoleLogger, Injectable, LoggerService, LogLevel } from "@nestjs/common";
-import { appendFileSync, existsSync, mkdirSync } from "fs";
-import { dirname, join } from "path";
+import {
+  ConsoleLogger,
+  Injectable,
+  LoggerService,
+  LogLevel,
+} from '@nestjs/common';
+import { appendFileSync, existsSync, mkdirSync } from 'fs';
+import { dirname, join } from 'path';
 
 @Injectable()
 export class LoggingService implements LoggerService {
