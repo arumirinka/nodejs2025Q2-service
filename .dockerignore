@@ -1,4 +1,7 @@
 node_modules
-src/test
+test
 dist
 doc
+package-lock.json
+.env.example
+.git
