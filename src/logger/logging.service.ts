@@ -9,6 +9,9 @@ import { dirname, join } from 'path';
 
 @Injectable()
 export class LoggingService implements LoggerService {
+  constructor() {
+    this.addErrorListeners();
+  }
   private readonly consoleLogger = new ConsoleLogger();
   private readonly logFile = join(__dirname, '../../logs/common.log');
   private readonly errorLogFile = join(__dirname, '../../logs/errors.log');
@@ -66,5 +69,17 @@ export class LoggingService implements LoggerService {
     }
 
     appendFileSync(this.errorLogFile, content);
+  }
+
+  private addErrorListeners() {
+    process.on('uncaughtException', (error: Error) => {
+      this.error(`[Uncaught Exception] ${error.message}`, 'APP', error.stack);
+      process.exit(1);
+    });
+
+    process.on('unhandledRejection', (error: Error) => {
+      this.error(`[Unhandled Rejection] ${error.message}`, 'APP', error.stack);
+      process.exit(1);
+    });
   }
 }
