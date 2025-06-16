@@ -6,6 +6,7 @@ import { dirname, join } from "path";
 export class LoggingService implements LoggerService {
   private readonly consoleLogger = new ConsoleLogger();
   private readonly logFile = join(__dirname, '../../logs/common.log');
+  private readonly errorLogFile = join(__dirname, '../../logs/errors.log');
 
   verbose(message: any, context: string) {
     this.consoleLogger.verbose(message, context);
@@ -25,6 +26,7 @@ export class LoggingService implements LoggerService {
   error(message: any, context?: string, trace?: string) {
     this.consoleLogger.error(message, context, trace);
     this.writeLogsToFile('error', message, context, trace);
+    this.writeErrorLogsToFile('error', message, context, trace);
   }
 
   private writeLogsToFile(
@@ -33,7 +35,7 @@ export class LoggingService implements LoggerService {
     context?: string,
     trace?: string,
   ) {
-    const timestamp = new Date().toISOString();
+    const timestamp = new Date().toUTCString();
     const content = `${timestamp} ${level} [${context}] ${message}\n${trace ? `TRACE: ${trace}\n` : ''}`;
 
     const logDir = dirname(this.logFile);
@@ -42,5 +44,22 @@ export class LoggingService implements LoggerService {
     }
 
     appendFileSync(this.logFile, content);
+  }
+
+  private writeErrorLogsToFile(
+    level: LogLevel,
+    message: any,
+    context?: string,
+    trace?: string,
+  ) {
+    const timestamp = new Date().toUTCString();
+    const content = `${timestamp} ${level} [${context}] ${message}\n${trace ? `TRACE: ${trace}\n` : ''}`;
+
+    const errorLogDir = dirname(this.errorLogFile);
+    if (!existsSync(errorLogDir)) {
+      mkdirSync(errorLogDir, { recursive: true });
+    }
+
+    appendFileSync(this.errorLogFile, content);
   }
 }
