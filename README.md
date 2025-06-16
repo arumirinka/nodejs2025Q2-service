@@ -15,6 +15,7 @@ git clone https://github.com/arumirinka/nodejs2025Q2-service.git
 Please do not forget to switch to the proper branch:
 - `library-service` for task 1
 - `library-service-p2` for task 2
+- `library-service-p3` for task 3
 
 ## Installing NPM modules
 
@@ -31,7 +32,7 @@ Create the `.env` file and paste there the contents of the `.env.example` file.
 ```
 npm start
 ```
-or
+or (for task 2)
 ```
 npm run docker:up
 ```
@@ -43,19 +44,32 @@ Postman (http://localhost:4000/) and check the endpoints and functionality menti
 
 When the application is running, open new terminal and enter:
 
-To run all tests without authorization
+To run all tests without authorization (please note that this is not going to work in the task 3)
 
 ```
 npm run test
 ```
 
-To run only one of all test suites
+To run only one of all test suites (please note that this is not going to work in the task 3)
 
 ```
 npm run test -- <path to suite>
 ```
 
-### Stopping the app
+To run all test with authorization (for task 3)
+
+```
+npm run test:auth
+```
+
+To run only specific test suite with authorization (for task 3)
+
+```
+npm run test:auth -- <path to suite>
+```
+
+
+### Stopping the app (for task 2)
 
 ```
 npm run docker:down
