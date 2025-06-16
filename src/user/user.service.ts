@@ -8,10 +8,11 @@ import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { DatabaseService } from 'src/database/database.service';
 import { v4 } from 'uuid';
+import { LoggingService } from 'src/logger/logging.service';
 
 @Injectable()
 export class UserService {
-  constructor(private database: DatabaseService) {}
+  constructor(private database: DatabaseService, private logging: LoggingService) {}
 
   create(createUserDto: CreateUserDto) {
     const id = v4();
@@ -30,6 +31,7 @@ export class UserService {
   }
 
   findAll() {
+    this.logging.log('Users list', "USERS");
     return this.database.users.map(({ password, ...user }) => user);
   }
 
