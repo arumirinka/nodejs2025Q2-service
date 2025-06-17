@@ -4,7 +4,7 @@ services:
     container_name: api
     ports:
       - ${PORT}:${PORT}
-    restart: always
+    restart: unless-stopped
     develop:
       watch:
         - path: ./src
